@@ -1,0 +1,60 @@
+#include<iostream>
+#include<cmath>
+#include<bits/stdc++.h>
+#include<vector>
+#include<map>
+using namespace std;
+
+int main()
+{
+  multimap<int,pair<int,int>>mymap;
+  int n,q;
+  std::cin>>n>>q;
+  while(q--)
+  {
+    int a,b;
+    std::cin>>a>>b;
+    int diff=abs(a-b);
+    mymap.insert(make_pair(diff,make_pair(a,b)));
+  }
+  bool arr[n];
+  memset(arr,true,sizeof(arr));
+  int till_min=INT_MAX;
+  int curr_min;
+  int flag=0;
+  map<int,pair<int,int>>::iterator itr;
+  for(itr=mymap.begin();itr!=mymap.end();itr++)
+  {
+    //std::cout<<"Key is: "<<itr->first<<"and corressponding pair: "<<(itr->second).first<<","<<(itr->second).second<<endl;
+    int d;
+    int a,b;
+    d=itr->first;
+    a=(itr->second).first;
+    b=(itr->second).second;
+    curr_min=0;
+    int count=0;
+    for(int i=a;i<=b;i++)
+    {
+      if(arr[i]==true)
+      {
+        arr[i]=false;
+        curr_min++;
+      }
+      else
+      {
+        count++;
+      }
+    }
+    if(curr_min<till_min)
+    {
+      till_min=curr_min;
+    }
+    if(count==abs(a-b)+1)
+    {
+      till_min=0;
+      break;
+    }
+  }
+  std::cout<<till_min<<endl;
+  return 0;
+}
